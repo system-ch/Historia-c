@@ -297,7 +297,7 @@ body.role-ro .firma-btn{display:none!important}
 .sv-mbox{background:#fff;border-radius:22px;max-width:380px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35);text-align:center}
 .sv-mbox .sv-img{height:150px}.sv-mbox .mb{padding:6px 24px 22px}.sv-mbox h3{margin:4px 0 8px;color:#14395e}.sv-mbox p{margin:0 0 16px;color:#5b6f86;font-size:14px;line-height:1.5}
 .sv-mbox button{height:40px;padding:0 24px;border:0;border-radius:12px;background:#0986b4;color:#fff;font-weight:800;cursor:pointer}
-</style>
+.so-monto{width:96px;height:32px;border:1px solid #cfdceb;border-radius:8px;padding:0 8px;font-weight:700;color:#1b6b3f;box-sizing:border-box}.so-monto:focus{outline:2px solid #10b3d7}</style>
 <style>
 /* Formatos ajustados a las pantallas de referencia S2–S8 */
 .precise-table {overflow-x:auto;overflow-y:hidden;max-width:100%;border:1px solid #d0dce9;border-radius:7px;margin:8px 0 3px;scrollbar-width:auto;}
@@ -729,7 +729,7 @@ body.role-ro .firma-btn{display:none!important}
 <button class="btn-secondary" id="soLimpiar">Limpiar</button>
 </div>
 <div class="pp-card">
-<table><thead><tr><th>N°</th><th>DNI</th><th>Apellidos y nombres</th><th>Legajo</th><th>Pagó</th><th>Fecha de pago</th><th>Monto</th><th style="text-align:right">Acciones</th></tr></thead><tbody id="soBody"></tbody></table>
+<table><thead><tr><th>N°</th><th>DNI</th><th>Apellidos y nombres</th><th>Legajo</th><th>Monto (S/)</th><th>Pagó</th><th>Fecha de pago</th><th style="text-align:right">Acciones</th></tr></thead><tbody id="soBody"></tbody></table>
 <div class="rep-empty" id="soEmpty" style="display:none;padding:18px;text-align:center;color:#7e8da3"></div>
 <div class="pp-pager"><span id="soInfo"></span><div class="btns"><button id="soPrev">‹ Anterior</button><button id="soNext">Siguiente ›</button></div></div>
 </div>
@@ -1073,6 +1073,8 @@ window.__PG=(function(){
   o.save=function(x){ try{localStorage.setItem(PK,JSON.stringify(x));}catch(e){} };
   return o;
 })();
+window.__montoDe=dni=>{ try{ const m=(JSON.parse(localStorage.getItem('club_la_union_montos_v1')||'{}')[dni]||{})[window.__PG.mes]; return m==null?'':m; }catch(e){ return ''; } };
+window.__setMonto=(dni,v)=>{ try{ const a=JSON.parse(localStorage.getItem('club_la_union_montos_v1')||'{}'); a[dni]=a[dni]||{}; if(v==null) delete a[dni][window.__PG.mes]; else a[dni][window.__PG.mes]=v; localStorage.setItem('club_la_union_montos_v1',JSON.stringify(a)); }catch(e){} };
 window.__pagoDe=dni=>(window.__PG.load()[dni]||{})[window.__PG.mes]||null;
 window.__fmtFecha=iso=>{ const d=new Date(iso); return isNaN(d)?iso:window.__PG.pad(d.getDate())+'/'+window.__PG.pad(d.getMonth()+1)+'/'+d.getFullYear(); };
 </script>
@@ -1316,7 +1318,7 @@ document.querySelectorAll('.gen-attach').forEach(function(box){
     const list=all.filter(x=>{const h=norm(x.dni+' '+x.ap+' '+x.am+' '+x.nombres); return q.every(w=>h.includes(w));});
     const pages=Math.max(1,Math.ceil(list.length/st.per)); if(st.page>pages) st.page=pages;
     const ini=(st.page-1)*st.per, rows=list.slice(ini,ini+st.per);
-    $('soBody').innerHTML=rows.map((x,i)=>'<tr><td>'+(ini+i+1)+'</td><td>'+esc(x.dni)+'</td><td>'+esc(full(x))+'</td><td><span class="status '+((legajoDe(x.dni)&&!legajoDe(x.dni).incompleto)?'pp-badge-con':'pp-badge-sin')+'">'+((legajoDe(x.dni)&&!legajoDe(x.dni).incompleto)?'Registrado':'Pendiente')+'</span></td><td><label class="pago-chk"><input type="checkbox" class="pagoChk" data-dni="'+esc(x.dni)+'"'+(window.__pagoDe(x.dni)?' checked':'')+'/><span></span></label></td><td class="pago-fecha">'+(window.__pagoDe(x.dni)?esc(window.__fmtFecha(window.__pagoDe(x.dni))):'<span class="pago-pend">Pendiente</span>')+'</td><td class="pago-monto">'+(window.__pagoDe(x.dni)?'S/ 150.00':'<span class="pago-pend">—</span>')+'</td><td><div class="so-acc">'+((legajoDe(x.dni)&&!legajoDe(x.dni).incompleto)?'<button class="btn-mini firma-btn" data-act="firma" data-dni="'+esc(x.dni)+'" title="Firmar digitalmente el legajo completo">✍️ Firma digital</button>':'')+'<button class="btn-mini" data-act="perfil" data-dni="'+esc(x.dni)+'">👤 Perfil</button><button class="btn-mini" data-act="legajo" data-dni="'+esc(x.dni)+'">✏️ Editar</button><button class="btn-mini btn-wsp" data-act="wsp" data-dni="'+esc(x.dni)+'" title="Enviar la ficha con firma digital por WhatsApp" aria-label="Enviar por WhatsApp"><svg viewBox="0 0 32 32" width="16" height="16" aria-hidden="true"><path fill="#fff" d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.7 6.4L3 29l6.8-1.8c1.9 1 4 1.6 6.2 1.6 7.2 0 13-5.8 13-13S23.2 3 16 3zm0 23.600c-2 0-3.900-.5-5.600-1.500l-.4-.2-4 1 1.100-3.900-.3-.4A10.500 10.500 0 1 1 16 26.600zm5.800-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.5c.2-.2.200-.3.300-.5.100-.2.100-.4 0-.5-.1-.2-.7-1.700-1-2.300-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.100-.8.400-.3.300-1 1-1 2.500s1.100 2.900 1.200 3.100c.2.200 2.100 3.200 5.100 4.500 3 1.200 3 .8 3.500.8.600-.1 1.900-.8 2.200-1.500.3-.7.300-1.300.2-1.500-.1-.2-.3-.2-.6-.4z"/></svg></button></div></td></tr>').join('');
+    $('soBody').innerHTML=rows.map((x,i)=>'<tr><td>'+(ini+i+1)+'</td><td>'+esc(x.dni)+'</td><td>'+esc(full(x))+'</td><td><span class="status '+((legajoDe(x.dni)&&!legajoDe(x.dni).incompleto)?'pp-badge-con':'pp-badge-sin')+'">'+((legajoDe(x.dni)&&!legajoDe(x.dni).incompleto)?'Registrado':'Pendiente')+'</span></td><td><input type="number" min="0" step="0.01" class="so-monto" data-dni="'+esc(x.dni)+'" placeholder="0.00" value="'+esc(window.__montoDe(x.dni)||'')+'"/></td><td><label class="pago-chk"><input type="checkbox" class="pagoChk" data-dni="'+esc(x.dni)+'"'+(window.__pagoDe(x.dni)?' checked':'')+'/><span></span></label></td><td class="pago-fecha">'+(window.__pagoDe(x.dni)?esc(window.__fmtFecha(window.__pagoDe(x.dni))):'<span class="pago-pend">Pendiente</span>')+'</td><td><div class="so-acc">'+((legajoDe(x.dni)&&!legajoDe(x.dni).incompleto)?'<button class="btn-mini firma-btn" data-act="firma" data-dni="'+esc(x.dni)+'" title="Firmar digitalmente el legajo completo">✍️ Firma digital</button>':'')+'<button class="btn-mini" data-act="perfil" data-dni="'+esc(x.dni)+'">👤 Perfil</button><button class="btn-mini" data-act="legajo" data-dni="'+esc(x.dni)+'">✏️ Editar</button><button class="btn-mini btn-wsp" data-act="wsp" data-dni="'+esc(x.dni)+'" title="Enviar la ficha con firma digital por WhatsApp" aria-label="Enviar por WhatsApp"><svg viewBox="0 0 32 32" width="16" height="16" aria-hidden="true"><path fill="#fff" d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.7 6.4L3 29l6.8-1.8c1.9 1 4 1.6 6.2 1.6 7.2 0 13-5.8 13-13S23.2 3 16 3zm0 23.600c-2 0-3.900-.5-5.600-1.500l-.4-.2-4 1 1.100-3.900-.3-.4A10.500 10.500 0 1 1 16 26.600zm5.800-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.5c.2-.2.200-.3.300-.5.100-.2.100-.4 0-.5-.1-.2-.7-1.700-1-2.300-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.100-.8.400-.3.300-1 1-1 2.500s1.100 2.900 1.200 3.100c.2.200 2.100 3.200 5.100 4.500 3 1.200 3 .8 3.500.8.600-.1 1.900-.8 2.200-1.500.3-.7.300-1.300.2-1.500-.1-.2-.3-.2-.6-.4z"/></svg></button></div></td></tr>').join('');
     const em=$('soEmpty'); em.style.display=list.length?'none':'block';
     em.textContent=all.length?'No se encontraron socios con esa búsqueda.':'Aún no hay socios. Aquí aparecen los socios que se registren en Legajos.';
     $('soInfo').textContent=list.length?('Mostrando '+(ini+1)+'–'+(ini+rows.length)+' de '+list.length.toLocaleString('es-PE')):'0 resultados';
@@ -1753,14 +1755,23 @@ document.querySelectorAll('.gen-attach').forEach(function(box){
   setMes(mesActual);
   $('soMes').addEventListener('change',()=>{ setMes($('soMes').value); setView('socios'); });
   $('rpMes').addEventListener('change',()=>{ setMes($('rpMes').value); renderRep(); });
+  $('soBody').addEventListener('change',e=>{ const i=e.target.closest('.so-monto'); if(!i) return; const v=parseFloat(i.value); if(v>=0&&!isNaN(v)) window.__setMonto(i.dataset.dni,v); else window.__setMonto(i.dataset.dni,null); });
   // casilla de pago en Socios
   $('soBody').addEventListener('change',e=>{
     const c=e.target.closest('.pagoChk'); if(!c) return;
     const all=load(), dni=c.dataset.dni; all[dni]=all[dni]||{};
+    const tr=c.closest('tr'), mi=tr.querySelector('.so-monto');
+    if(c.checked){
+      const monto=parseFloat(mi&&mi.value);
+      if(!(monto>0)){ alert('Ingrese primero el monto del pago.'); c.checked=false; if(mi) mi.focus(); return; }
+      const nom=tr.children[2].textContent.trim();
+      if(!confirm('¿Confirmar el pago de S/ '+monto.toFixed(2)+' de '+nom+' (DNI '+dni+') correspondiente a '+mesTxt(mes)+'?')){ c.checked=false; return; }
+      window.__setMonto(dni,monto);
+    }
     if(c.checked) all[dni][mes]=new Date().toISOString(); else delete all[dni][mes];
     if(!Object.keys(all[dni]).length) delete all[dni];
     save(all);
-    c.closest('tr').querySelector('.pago-fecha').innerHTML=c.checked?window.__fmtFecha(all[dni][mes]):'<span class="pago-pend">Pendiente</span>'; const _m=c.closest('tr').querySelector('.pago-monto'); if(_m) _m.innerHTML=c.checked?'S/ 150.00':'<span class="pago-pend">—</span>';
+    c.closest('tr').querySelector('.pago-fecha').innerHTML=c.checked?window.__fmtFecha(all[dni][mes]):'<span class="pago-pend">Pendiente</span>';
   });
   // ---- Reportes
   const f={q:'',f:'todos'}; const norm2=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
@@ -1806,7 +1817,7 @@ document.querySelectorAll('.gen-attach').forEach(function(box){
     $('rpBody').innerHTML=list.map((x,k)=>{
       const pg=pago(x), mm=pagos[x.dni]||{};
       const dots=MESES.map((m,ix)=>{const key=anio+'-'+pad(ix+1); return '<i class="'+(mm[key]?'on':'')+(key===mes?' cur':'')+'" title="'+m[0].toUpperCase()+m.slice(1)+(mm[key]?': pagó el '+window.__fmtFecha(mm[key]):': sin pago')+'"></i>';}).join('');
-      return '<tr><td>'+(k+1)+'</td><td>'+esc2(x.dni)+'</td><td>'+esc2(x.nom)+'</td><td><span class="status '+(pg?'pp-badge-con':'pp-badge-sin')+'">'+(pg?'Pagó':'Pendiente')+'</span></td><td class="pago-fecha">'+(pg?window.__fmtFecha(pg):'—')+'</td><td class="pago-monto">'+(pg?'S/ 150.00':'—')+'</td><td><span class="mdots">'+dots+'</span></td></tr>';
+      return '<tr><td>'+(k+1)+'</td><td>'+esc2(x.dni)+'</td><td>'+esc2(x.nom)+'</td><td><span class="status '+(pg?'pp-badge-con':'pp-badge-sin')+'">'+(pg?'Pagó':'Pendiente')+'</span></td><td class="pago-fecha">'+(pg?window.__fmtFecha(pg):'—')+'</td><td class="pago-monto">'+(pg&&window.__montoDe(x.dni)?'S/ '+Number(window.__montoDe(x.dni)).toFixed(2):'—')+'</td><td><span class="mdots">'+dots+'</span></td></tr>';
     }).join('');
     $('rpEmpty').style.display=socios.length?'none':'block';
     document.querySelectorAll('[data-rpf]').forEach(b=>b.classList.toggle('active',b.dataset.rpf===f.f));
