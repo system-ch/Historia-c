@@ -258,7 +258,7 @@ body.role-ro .firma-btn{display:none!important}
 .firma-txt strong{display:block;text-transform:uppercase}
 .firma-acc{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
 @media(max-width:520px){.firma-box{flex-direction:column;align-items:flex-start}}
-.btn-wsp{background:#25D366!important;border-color:#25D366!important;color:#fff!important;display:inline-flex;align-items:center;justify-content:center;padding:4px 8px}.btn-wsp:hover{background:#1ebe5b!important}</style>
+.btn-wsp{background:#25D366!important;border-color:#25D366!important;color:#fff!important;display:inline-flex;align-items:center;justify-content:center;padding:4px 8px}.btn-wsp:hover{background:#1ebe5b!important}.pago-monto{font-weight:800;color:#1b6b3f;white-space:nowrap}</style>
 <style>
 /* Formatos ajustados a las pantallas de referencia S2–S8 */
 .precise-table {overflow-x:auto;overflow-y:hidden;max-width:100%;border:1px solid #d0dce9;border-radius:7px;margin:8px 0 3px;scrollbar-width:auto;}
@@ -584,8 +584,8 @@ body.role-ro .firma-btn{display:none!important}
 <div class="field-block"><label>Zapatos</label><input name="talla_zapatos"/></div>
 <div class="field-block"><label>Casaca</label><input name="talla_casaca"/></div>
 <div class="field-block"><label>Buzo</label><input name="talla_buzo"/></div>
-<div class="field-block"><label>Medias</label><select name="talla_medias"><option></option><option>Sí</option><option>No</option></select></div>
-<div class="field-block"><label>Gorro</label><select name="talla_gorro"><option></option><option>Sí</option><option>No</option></select></div>
+<div class="field-block"><label>Medias</label><input name="talla_medias"/></div>
+<div class="field-block"><label>Gorro</label><input name="talla_gorro"/></div>
 <div class="pair-cell"><div class="field-block"><label>Peso (Kg)</label><input name="peso"/></div><div class="field-block"><label>Estatura (cm)</label><input name="estatura"/></div></div>
 </div>
 </div></div>
@@ -620,8 +620,8 @@ body.role-ro .firma-btn{display:none!important}
 <div class="subpanel-title">Remuneración / haberes</div>
 <div class="grid g4">
 <div class="field-block"><label>Entidad de depósito – remuneración / haberes</label><input name="entidad_remu"/></div>
-<div class="field-block"><label>N° de cuenta</label><input name="cuenta_remu"/></div>
-<div class="field-block"><label>N° de CCI</label><input name="cci_remu"/></div>
+<div class="field-block"><label>N° de cuenta</label><input name="cuenta_remu" inputmode="numeric" maxlength="14" pattern="\d{14}" placeholder="14 dígitos" oninput="this.value=this.value.replace(/\D/g,'').slice(0,14)"/></div>
+<div class="field-block"><label>N° de CCI</label><input name="cci_remu" inputmode="numeric" maxlength="20" pattern="\d{20}" placeholder="20 dígitos" oninput="this.value=this.value.replace(/\D/g,'').slice(0,20)"/></div>
 <div class="field-block"><label>Autorización de apertura</label><select name="aut_remu"><option></option><option>Sí</option><option>No</option></select></div>
 </div>
 </div>
@@ -629,8 +629,8 @@ body.role-ro .firma-btn{display:none!important}
 <div class="subpanel-title">CTS</div>
 <div class="grid g4">
 <div class="field-block"><label>Entidad de depósito – CTS</label><input name="entidad_cts"/></div>
-<div class="field-block"><label>N° de cuenta</label><input name="cuenta_cts"/></div>
-<div class="field-block"><label>N° de CCI</label><input name="cci_cts"/></div>
+<div class="field-block"><label>N° de cuenta</label><input name="cuenta_cts" inputmode="numeric" maxlength="14" pattern="\d{14}" placeholder="14 dígitos" oninput="this.value=this.value.replace(/\D/g,'').slice(0,14)"/></div>
+<div class="field-block"><label>N° de CCI</label><input name="cci_cts" inputmode="numeric" maxlength="20" pattern="\d{20}" placeholder="20 dígitos" oninput="this.value=this.value.replace(/\D/g,'').slice(0,20)"/></div>
 <div class="field-block"><label>Autorización de apertura</label><select name="aut_cts"><option></option><option>Sí</option><option>No</option></select></div>
 </div>
 </div>
@@ -638,9 +638,9 @@ body.role-ro .firma-btn{display:none!important}
 <div class="form-card"><div class="form-title">Datos de derechohabientes / familiares directos</div><div class="form-body">
 <div class="family-table-wrap">
 <table class="family-table">
-<thead><tr><th>Vínculo</th><th>Nombres y apellidos</th><th>DNI</th><th>F. nac</th><th>Edad</th><th>Vive</th><th>Persona c/discap.</th><th>Ocupación</th><th>Centro laboral / centro de estudios</th></tr></thead>
+<thead><tr><th>Vínculo</th><th>Nombres y apellidos</th><th>DNI</th><th>F. nac</th><th>Edad</th><th>Persona c/discap.</th><th>Ocupación</th><th>Centro laboral / centro de estudios</th></tr></thead>
 <tbody id="famBody">
-<tr><td>PADRE</td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr><tr><td>MADRE</td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr><tr><td>ESPOSA(O)</td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr><tr><td>CONVIVIENTE</td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr><tr><td>MADRE GESTANTE</td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr><tr><td data-tipo="HIJO(A)">HIJO(A) <button type="button" class="fam-plus" title="Agregar otro HIJO(A)">+</button></td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr><tr><td data-tipo="HIJASTRO(A)">HIJASTRO(A) <button type="button" class="fam-plus" title="Agregar otro HIJASTRO(A)">+</button></td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr>
+<tr><td>PADRE</td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr><tr><td>MADRE</td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr><tr><td>ESPOSA(O)</td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr><tr><td>CONVIVIENTE</td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr><tr><td>MADRE GESTANTE</td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr><tr><td data-tipo="HIJO(A)">HIJO(A) <button type="button" class="fam-plus" title="Agregar otro HIJO(A)">+</button></td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr><tr><td data-tipo="HIJASTRO(A)">HIJASTRO(A) <button type="button" class="fam-plus" title="Agregar otro HIJASTRO(A)">+</button></td><td><input/></td><td><input/></td><td><input type="date"/></td><td><input/></td><td><select><option></option><option>Sí</option><option>No</option></select></td><td><input/></td><td><input/></td></tr>
 </tbody>
 </table>
 </div>
@@ -689,7 +689,7 @@ body.role-ro .firma-btn{display:none!important}
 <button class="btn-secondary" id="soLimpiar">Limpiar</button>
 </div>
 <div class="pp-card">
-<table><thead><tr><th>N°</th><th>DNI</th><th>Apellidos y nombres</th><th>Legajo</th><th>Pagó</th><th>Fecha de pago</th><th style="text-align:right">Acciones</th></tr></thead><tbody id="soBody"></tbody></table>
+<table><thead><tr><th>N°</th><th>DNI</th><th>Apellidos y nombres</th><th>Legajo</th><th>Pagó</th><th>Fecha de pago</th><th>Monto</th><th style="text-align:right">Acciones</th></tr></thead><tbody id="soBody"></tbody></table>
 <div class="rep-empty" id="soEmpty" style="display:none;padding:18px;text-align:center;color:#7e8da3"></div>
 <div class="pp-pager"><span id="soInfo"></span><div class="btns"><button id="soPrev">‹ Anterior</button><button id="soNext">Siguiente ›</button></div></div>
 </div>
@@ -755,7 +755,7 @@ body.role-ro .firma-btn{display:none!important}
 <input class="pp-search" id="rpSearch" placeholder="Buscar por nombre o DNI…" type="search"/>
 </div>
 <div class="pp-card">
-<table><thead><tr><th>N°</th><th>DNI</th><th>Apellidos y nombres</th><th>Estado del mes</th><th>Fecha de pago</th><th>Pagos del año (Ene–Dic)</th></tr></thead><tbody id="rpBody"></tbody></table>
+<table><thead><tr><th>N°</th><th>DNI</th><th>Apellidos y nombres</th><th>Estado del mes</th><th>Fecha de pago</th><th>Monto</th><th>Pagos del año (Ene–Dic)</th></tr></thead><tbody id="rpBody"></tbody></table>
 <div class="rep-empty" id="rpEmpty" style="display:none;padding:18px;text-align:center;color:#7e8da3">Aún no hay socios registrados. Aparecen al guardar legajos.</div>
 </div>
 </section>
@@ -969,7 +969,7 @@ renderRecords();
 const OPCIONALES=['telefono_casa','emerg_telefono','situacion_complementaria','dis_otra_detalle','resolucion_conadis','otro_pension','nombre_afp','tipo_bonificacion','detalle_bonificacion'];
 form.addEventListener('input',e=>e.target.classList.remove('campo-vacio'),true);
 form.addEventListener('change',e=>e.target.classList.remove('campo-vacio'),true);
-btnGuardar.addEventListener('click',()=>{
+btnGuardar.addEventListener('click',()=>{ if(window.__validarFormatos&&!window.__validarFormatos()) return;
   const faltan=Array.from(form.querySelectorAll('input[name],select[name],textarea[name]')).filter(el=>{
     if(el.disabled||el.type==='hidden'||el.type==='file'||el.type==='checkbox'||OPCIONALES.includes(el.name)) return false;
     return String(el.value||'').trim()==='';
@@ -1257,7 +1257,7 @@ document.querySelectorAll('.gen-attach').forEach(function(box){
     const list=all.filter(x=>{const h=norm(x.dni+' '+x.ap+' '+x.am+' '+x.nombres); return q.every(w=>h.includes(w));});
     const pages=Math.max(1,Math.ceil(list.length/st.per)); if(st.page>pages) st.page=pages;
     const ini=(st.page-1)*st.per, rows=list.slice(ini,ini+st.per);
-    $('soBody').innerHTML=rows.map((x,i)=>'<tr><td>'+(ini+i+1)+'</td><td>'+esc(x.dni)+'</td><td>'+esc(full(x))+'</td><td><span class="status '+((legajoDe(x.dni)&&!legajoDe(x.dni).incompleto)?'pp-badge-con':'pp-badge-sin')+'">'+((legajoDe(x.dni)&&!legajoDe(x.dni).incompleto)?'Registrado':'Pendiente')+'</span></td><td><label class="pago-chk"><input type="checkbox" class="pagoChk" data-dni="'+esc(x.dni)+'"'+(window.__pagoDe(x.dni)?' checked':'')+'/><span></span></label></td><td class="pago-fecha">'+(window.__pagoDe(x.dni)?esc(window.__fmtFecha(window.__pagoDe(x.dni))):'<span class="pago-pend">Pendiente</span>')+'</td><td><div class="so-acc">'+((legajoDe(x.dni)&&!legajoDe(x.dni).incompleto)?'<button class="btn-mini firma-btn" data-act="firma" data-dni="'+esc(x.dni)+'" title="Firmar digitalmente el legajo completo">✍️ Firma digital</button>':'')+'<button class="btn-mini" data-act="perfil" data-dni="'+esc(x.dni)+'">👤 Perfil</button><button class="btn-mini" data-act="legajo" data-dni="'+esc(x.dni)+'">✏️ Editar</button><button class="btn-mini btn-wsp" data-act="wsp" data-dni="'+esc(x.dni)+'" title="Enviar la ficha con firma digital por WhatsApp" aria-label="Enviar por WhatsApp"><svg viewBox="0 0 32 32" width="16" height="16" aria-hidden="true"><path fill="#fff" d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.7 6.4L3 29l6.8-1.8c1.9 1 4 1.6 6.2 1.6 7.2 0 13-5.8 13-13S23.2 3 16 3zm0 23.600c-2 0-3.900-.5-5.600-1.500l-.4-.2-4 1 1.100-3.900-.3-.4A10.500 10.500 0 1 1 16 26.600zm5.800-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.5c.2-.2.200-.3.300-.5.100-.2.100-.4 0-.5-.1-.2-.7-1.700-1-2.300-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.100-.8.400-.3.300-1 1-1 2.500s1.100 2.900 1.200 3.100c.2.200 2.100 3.200 5.100 4.500 3 1.200 3 .8 3.500.8.600-.1 1.900-.8 2.200-1.500.3-.7.300-1.300.2-1.500-.1-.2-.3-.2-.6-.4z"/></svg></button></div></td></tr>').join('');
+    $('soBody').innerHTML=rows.map((x,i)=>'<tr><td>'+(ini+i+1)+'</td><td>'+esc(x.dni)+'</td><td>'+esc(full(x))+'</td><td><span class="status '+((legajoDe(x.dni)&&!legajoDe(x.dni).incompleto)?'pp-badge-con':'pp-badge-sin')+'">'+((legajoDe(x.dni)&&!legajoDe(x.dni).incompleto)?'Registrado':'Pendiente')+'</span></td><td><label class="pago-chk"><input type="checkbox" class="pagoChk" data-dni="'+esc(x.dni)+'"'+(window.__pagoDe(x.dni)?' checked':'')+'/><span></span></label></td><td class="pago-fecha">'+(window.__pagoDe(x.dni)?esc(window.__fmtFecha(window.__pagoDe(x.dni))):'<span class="pago-pend">Pendiente</span>')+'</td><td class="pago-monto">'+(window.__pagoDe(x.dni)?'S/ 150.00':'<span class="pago-pend">—</span>')+'</td><td><div class="so-acc">'+((legajoDe(x.dni)&&!legajoDe(x.dni).incompleto)?'<button class="btn-mini firma-btn" data-act="firma" data-dni="'+esc(x.dni)+'" title="Firmar digitalmente el legajo completo">✍️ Firma digital</button>':'')+'<button class="btn-mini" data-act="perfil" data-dni="'+esc(x.dni)+'">👤 Perfil</button><button class="btn-mini" data-act="legajo" data-dni="'+esc(x.dni)+'">✏️ Editar</button><button class="btn-mini btn-wsp" data-act="wsp" data-dni="'+esc(x.dni)+'" title="Enviar la ficha con firma digital por WhatsApp" aria-label="Enviar por WhatsApp"><svg viewBox="0 0 32 32" width="16" height="16" aria-hidden="true"><path fill="#fff" d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.7 6.4L3 29l6.8-1.8c1.9 1 4 1.6 6.2 1.6 7.2 0 13-5.8 13-13S23.2 3 16 3zm0 23.600c-2 0-3.900-.5-5.600-1.500l-.4-.2-4 1 1.100-3.900-.3-.4A10.500 10.500 0 1 1 16 26.600zm5.800-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.5c.2-.2.200-.3.300-.5.100-.2.100-.4 0-.5-.1-.2-.7-1.700-1-2.300-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.100-.8.400-.3.300-1 1-1 2.500s1.100 2.900 1.200 3.100c.2.200 2.100 3.200 5.100 4.500 3 1.200 3 .8 3.500.8.600-.1 1.900-.8 2.200-1.500.3-.7.300-1.300.2-1.500-.1-.2-.3-.2-.6-.4z"/></svg></button></div></td></tr>').join('');
     const em=$('soEmpty'); em.style.display=list.length?'none':'block';
     em.textContent=all.length?'No se encontraron socios con esa búsqueda.':'Aún no hay socios. Aquí aparecen los socios que se registren en Legajos.';
     $('soInfo').textContent=list.length?('Mostrando '+(ini+1)+'–'+(ini+rows.length)+' de '+list.length.toLocaleString('es-PE')):'0 resultados';
@@ -1345,6 +1345,27 @@ document.querySelectorAll('.gen-attach').forEach(function(box){
     setTimeout(go,350);
   };
 
+  window.__wspCfg=function(){ try{ const c=JSON.parse(localStorage.getItem('club_wsp_api_v1')||'null'); return c&&c.id&&c.token?c:null; }catch(e){ return null; } };
+  window.__wspConfigurar=function(){
+    const cur=window.__wspCfg()||{};
+    const id=prompt('WhatsApp Business API – ID del número de teléfono (Phone Number ID).\nDeje vacío para desactivar el envío directo:',cur.id||''); if(id===null) return;
+    if(!id.trim()){ localStorage.removeItem('club_wsp_api_v1'); alert('Envío directo desactivado.'); return; }
+    const tk=prompt('Token de acceso permanente de WhatsApp Business API:',cur.token||''); if(!tk) return;
+    localStorage.setItem('club_wsp_api_v1',JSON.stringify({id:id.trim(),token:tk.trim()})); alert('Envío directo configurado.');
+  };
+  window.__wspApi=async function(cfg,blob,fname,num,texto){
+    const base='https://graph.facebook.com/v20.0/'+cfg.id, H={Authorization:'Bearer '+cfg.token};
+    try{
+      const fd=new FormData(); fd.append('messaging_product','whatsapp'); fd.append('type','application/pdf'); fd.append('file',blob,fname);
+      const up=await fetch(base+'/media',{method:'POST',headers:H,body:fd}); const uj=await up.json();
+      if(!uj.id) throw new Error((uj.error&&uj.error.message)||'No se pudo subir el PDF');
+      const rs=await fetch(base+'/messages',{method:'POST',headers:Object.assign({'Content-Type':'application/json'},H),body:JSON.stringify({messaging_product:'whatsapp',to:num,type:'document',document:{id:uj.id,filename:fname,caption:texto}})});
+      const rj=await rs.json();
+      if(!rj.messages) throw new Error((rj.error&&rj.error.message)||'WhatsApp rechazó el envío');
+      alert('✅ Ficha enviada por WhatsApp a +'+num);
+    }catch(err){ alert('No se pudo enviar por WhatsApp: '+err.message); }
+  };
+  document.addEventListener('contextmenu',e=>{ const b=e.target.closest&&e.target.closest('.btn-wsp'); if(b){ e.preventDefault(); window.__wspConfigurar(); } });
   window.__enviarWsp=function(dni){
     let firmas={}; try{ firmas=JSON.parse(localStorage.getItem('club_la_union_firmas_v1')||'{}')||{}; }catch(e){}
     if(!firmas[dni]){ alert('Primero seleccione “✍️ Firma digital” para este socio y luego use WhatsApp.'); return; }
@@ -1361,6 +1382,8 @@ document.querySelectorAll('.gen-attach').forEach(function(box){
       const fname='Ficha_socio_'+dni+'.pdf';
       window.html2pdf().set({margin:0,filename:fname,image:{type:'jpeg',quality:.96},html2canvas:{scale:2,useCORS:true},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(box.firstElementChild.nextElementSibling||box).outputPdf('blob').then(blob=>{
         box.remove();
+        const cfg=window.__wspCfg();
+        if(cfg) return window.__wspApi(cfg,blob,fname,num,texto);
         const file=new File([blob],fname,{type:'application/pdf'});
         if(navigator.canShare&&navigator.canShare({files:[file]})){
           return navigator.share({files:[file],text:texto}).catch(()=>{});
@@ -1678,7 +1701,7 @@ document.querySelectorAll('.gen-attach').forEach(function(box){
     if(c.checked) all[dni][mes]=new Date().toISOString(); else delete all[dni][mes];
     if(!Object.keys(all[dni]).length) delete all[dni];
     save(all);
-    c.closest('tr').querySelector('.pago-fecha').innerHTML=c.checked?window.__fmtFecha(all[dni][mes]):'<span class="pago-pend">Pendiente</span>';
+    c.closest('tr').querySelector('.pago-fecha').innerHTML=c.checked?window.__fmtFecha(all[dni][mes]):'<span class="pago-pend">Pendiente</span>'; const _m=c.closest('tr').querySelector('.pago-monto'); if(_m) _m.innerHTML=c.checked?'S/ 150.00':'<span class="pago-pend">—</span>';
   });
   // ---- Reportes
   const f={q:'',f:'todos'}; const norm2=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
@@ -1724,7 +1747,7 @@ document.querySelectorAll('.gen-attach').forEach(function(box){
     $('rpBody').innerHTML=list.map((x,k)=>{
       const pg=pago(x), mm=pagos[x.dni]||{};
       const dots=MESES.map((m,ix)=>{const key=anio+'-'+pad(ix+1); return '<i class="'+(mm[key]?'on':'')+(key===mes?' cur':'')+'" title="'+m[0].toUpperCase()+m.slice(1)+(mm[key]?': pagó el '+window.__fmtFecha(mm[key]):': sin pago')+'"></i>';}).join('');
-      return '<tr><td>'+(k+1)+'</td><td>'+esc2(x.dni)+'</td><td>'+esc2(x.nom)+'</td><td><span class="status '+(pg?'pp-badge-con':'pp-badge-sin')+'">'+(pg?'Pagó':'Pendiente')+'</span></td><td class="pago-fecha">'+(pg?window.__fmtFecha(pg):'—')+'</td><td><span class="mdots">'+dots+'</span></td></tr>';
+      return '<tr><td>'+(k+1)+'</td><td>'+esc2(x.dni)+'</td><td>'+esc2(x.nom)+'</td><td><span class="status '+(pg?'pp-badge-con':'pp-badge-sin')+'">'+(pg?'Pagó':'Pendiente')+'</span></td><td class="pago-fecha">'+(pg?window.__fmtFecha(pg):'—')+'</td><td class="pago-monto">'+(pg?'S/ 150.00':'—')+'</td><td><span class="mdots">'+dots+'</span></td></tr>';
     }).join('');
     $('rpEmpty').style.display=socios.length?'none':'block';
     document.querySelectorAll('[data-rpf]').forEach(b=>b.classList.toggle('active',b.dataset.rpf===f.f));
@@ -1993,6 +2016,37 @@ document.querySelectorAll('.gen-attach').forEach(function(box){
       return orig.apply(this,arguments);
     };
   }
+})();
+</script>
+<script>
+/* Formato: DNI 8 dígitos, celulares 9 dígitos */
+(function(){
+  const frm=document.getElementById('legajoForm'); if(!frm) return;
+  const num=(el,n)=>{ el.setAttribute('inputmode','numeric'); el.setAttribute('maxlength',n); el.setAttribute('placeholder',n+' dígitos'); el.addEventListener('input',()=>{ const v=el.value.replace(/\D/g,'').slice(0,n); if(v!==el.value) el.value=v; }); };
+  const tipo=frm.querySelector('[name="tipo_documento"]'), doc=frm.querySelector('[name="nro_documento"]');
+  function aplicaDoc(){
+    if(!doc) return; const esDni=!tipo||tipo.value==='DNI'||tipo.value==='';
+    if(esDni){ doc.setAttribute('inputmode','numeric'); doc.setAttribute('maxlength',8); doc.setAttribute('placeholder','8 dígitos'); doc.value=doc.value.replace(/\D/g,'').slice(0,8); }
+    else { doc.removeAttribute('maxlength'); doc.removeAttribute('inputmode'); doc.removeAttribute('placeholder'); }
+  }
+  if(doc){ doc.addEventListener('input',()=>{ if(!tipo||tipo.value==='DNI'||tipo.value==='') { const v=doc.value.replace(/\D/g,'').slice(0,8); if(v!==doc.value) doc.value=v; } }); }
+  if(tipo) tipo.addEventListener('change',aplicaDoc); aplicaDoc();
+  const cels=[frm.querySelector('[name="celular_notif"]'),frm.querySelector('[name="emerg_celular"]')].filter(Boolean);
+  cels.forEach(el=>num(el,9));
+  document.addEventListener('input',e=>{ const t=e.target; if(t&&t.matches&&t.matches('input[aria-label="CELULAR"]')){ const v=t.value.replace(/\D/g,'').slice(0,9); if(v!==t.value) t.value=v; t.setAttribute('maxlength',9); } });
+  document.querySelectorAll('input[aria-label="CELULAR"]').forEach(el=>{ el.setAttribute('inputmode','numeric'); el.setAttribute('maxlength',9); el.setAttribute('placeholder','9 dígitos'); });
+  window.__validarFormatos=function(){
+    const err=[];
+    if(doc&&(!tipo||tipo.value==='DNI'||tipo.value==='')&&doc.value&&!/^\d{8}$/.test(doc.value)) err.push(['El DNI debe tener exactamente 8 números.',doc]);
+    cels.forEach(el=>{ if(el.value&&!/^\d{9}$/.test(el.value)) err.push(['El número de celular debe tener exactamente 9 números.',el]); });
+    [['cuenta_remu',14,'N° de cuenta (remuneración)'],['cci_remu',20,'N° de CCI (remuneración)'],['cuenta_cts',14,'N° de cuenta (CTS)'],['cci_cts',20,'N° de CCI (CTS)']].forEach(c=>{ const el=frm.querySelector('[name="'+c[0]+'"]'); if(el&&el.value&&!new RegExp('^\\d{'+c[1]+'}$').test(el.value)) err.push([c[2]+' debe tener exactamente '+c[1]+' números.',el]); });
+    document.querySelectorAll('input[aria-label="CELULAR"]').forEach(el=>{ if(el.value&&!/^\d{9}$/.test(el.value)) err.push(['El celular del referente debe tener exactamente 9 números.',el]); });
+    if(!err.length) return true;
+    const e0=err[0]; alert(e0[0]);
+    const v=e0[1].closest('section[id^="view-s"]'); if(v&&typeof setView==='function') setView(v.id.replace('view-','')); else if(typeof setView==='function') setView('legajos');
+    setTimeout(()=>{ e0[1].classList.add('campo-vacio'); e0[1].scrollIntoView({block:'center',behavior:'smooth'}); e0[1].focus({preventScroll:true}); },80);
+    return false;
+  };
 })();
 </script>
 </body>
